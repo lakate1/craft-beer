@@ -18,6 +18,12 @@ connection.once('open', () => {
   console.log("DB connected!");
 })
 
+const beersRouter = require("./routes/beers");
+const usersRouter = require("./routes/users");
+
+app.use("/beers", beersRouter);
+app.use("/users", usersRouter);
+
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
