@@ -1,11 +1,11 @@
-const mongoose = "mongoose";
+const mongoose = require("mongoose");
 
-const Schema = mongoose.schema;
+const Schema = mongoose.Schema;
 
 const beerSchema = new Schema ({
     username: { type: String, required: true },
     category: { type: String, required: true },
-    beerStyle: { type: String, required: true }
+    beerStyle: { type: String, required: true },
 }, {
     timestamps: true,
 });
