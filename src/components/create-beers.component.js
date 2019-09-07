@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 export default class CreateBeers extends Component {
     constructor(props) {
@@ -7,6 +8,7 @@ export default class CreateBeers extends Component {
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeBeerStyle = this.onChangeBeerStyle.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             username: "",
@@ -17,9 +19,14 @@ export default class CreateBeers extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            users: ["test user"],
-            username: "test user"
+        axios.get("http://localhost:5000/users/")
+        .then(response => {
+            if(response.data.length > 0) {
+                this.setState({
+                    users: response.data.map(user => user.username),
+                    username: response.data[0].username
+                })
+            }
         })
     }
     onChangeUsername(e){
@@ -46,7 +53,10 @@ export default class CreateBeers extends Component {
             category: this.state.category,
             beerStyle: this.state.beerStyle
         }
-        console.log(beer)
+        console.log(beer);
+
+        axios.post('http://localhost:5000/beers/add', beer)
+        .then(res => console.log(res.data));
 
         window.location = "/";
     }
